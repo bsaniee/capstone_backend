@@ -23,7 +23,7 @@ mongoose.connection
 .on("error", (err) => console.log(err))
 
 ////////////////////
-// Bookmark Model
+// Movie Model
 ////////////////////
 const MovieSchema = new mongoose.Schema({
     title: String,
