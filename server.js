@@ -44,5 +44,49 @@ app.use(express.json());
 
 // Test Route
 app.get("/", (req, res) => {
-    res.send("yo World")
+    res.send("Hello World")
   })
+
+// Index Route
+app.get("/movies", async (req, res) => {
+    try {
+        res.json(await Movie.find({}));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+  });
+  
+  // Create Route
+  app.post("/movies", async (req, res) => {
+    try {
+        res.json(await Movie.create(req.body));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+  });  
+  
+  // Delete Route
+  app.delete("/movies/:id", async (req, res) => {
+    // get the id from params
+    const id = req.params.id;
+    // delete the movie
+    try {res.json(await Movie.findByIdAndRemove(id));
+    } catch (error) {
+        res.status(400).json(error);
+    }
+  });
+  
+  // Update Route
+  app.put("/movies/:id", async (req, res) => {
+    // get the id from params
+    const id = req.params.id;
+    // update the movie
+    try {res.json(await Movie.findByIdAndUpdate(id, req.body, {new: true}))
+    } catch (error) {
+        res.status(400).json(error);
+    }
+  });
+
+
+// Listener
+app.listen(PORT, () => console.log(`listening on PORT ${PORT}`))
